@@ -17,7 +17,6 @@ import {
     loadMoreImages,
     hideScrollArrow,
     hideShowMore,
-    increasePhotoSize
 } from './functions';
 
 document.body.style.overflow = "hidden";
@@ -50,11 +49,34 @@ const fetchImages = async thisButton => {
             images_list.append(li_cloned);
         }
 
+        const image_container = document.querySelectorAll('.image-size');
+        image_container.forEach(photo => {
+            photo.addEventListener('click', event => {
+                let imageSrc = event.target.getAttribute('src');
+
+                const increased_photo_container = document.createElement('div');
+                increased_photo_container.classList.add('increased_photo_container');
+                images_list.append(increased_photo_container);
+
+                const increased_photo = document.createElement('img');
+                increased_photo.src = imageSrc;
+                increased_photo_container.append(increased_photo);
+
+                const exitButton = document.createElement('button');
+                increased_photo_container.append(exitButton);
+
+                exitButton.addEventListener('click', () => {
+                    increased_photo_container.remove();
+                    exitButton.removeEventListener('click', () => { })
+                })
+            })
+        })
+
         loadMoreImages(images)
         removeLoader(form);
         thisButton.disabled = false;
-
     } catch (error) {
+        console.log(error)
         if (error) {
             hideScrollArrow();
             hideShowMore();

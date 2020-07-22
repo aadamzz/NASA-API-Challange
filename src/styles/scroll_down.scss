@@ -12,7 +12,8 @@
     left: 50%;
     right: 50%;
     bottom: 80px;
-
+    z-index: 1;
+    
     .scroll-down_first {
         position: absolute;
         transform:translate(-50%, -50%);
